@@ -1,0 +1,14 @@
+# API 키 및 인증 파일
+service-account.json
+
+# 이미지 폴더
+img/
+
+# Python 관련
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+
+vision-env/
+*.pyc

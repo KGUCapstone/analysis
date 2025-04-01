@@ -1,0 +1,5 @@
+fastapi
+uvicorn
+google-cloud-vision
+pillow
+python-multipart
