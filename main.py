@@ -7,10 +7,10 @@ import io, os, re, json
 
 app = FastAPI(title="상품 이미지 분석 API")
 
-# CORS 설정 - 스프링에서 접근할 수 있도록
+# CORS 설정 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # 실제 배포 시에는 특정 도메인으로 제한하는 것이 좋습니다
+    allow_origins=["*"],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
