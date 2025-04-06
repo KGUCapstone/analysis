@@ -5,12 +5,15 @@ from google.cloud import vision
 from PIL import Image, ImageEnhance
 import io, os, re, json
 
-app = FastAPI(title="상품 이미지 분석 API")
+app = FastAPI(title="가격표 이미지 분석 API")
+
+backend_url = os.environ.get("BACKEND_URL", "http://localhost:8080")
+frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:3000")
 
 # CORS 설정 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  
+    allow_origins=[backend_url, frontend_url],  
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -152,7 +155,6 @@ async def analyze_image(file: UploadFile = File(...)):
 
         print("Spring으로 보낼 JSON:", payload)
 
-        backend_url = os.environ.get("BACKEND_URL", "http://localhost:8080")
         headers = {"Content-Type": "application/json"}
         backend_response = requests.post(
             backend_url + "/api/shopping/search",
