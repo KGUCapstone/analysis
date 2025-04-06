@@ -122,27 +122,53 @@ async def root():
 
 @app.post("/analyze/")
 async def analyze_image(file: UploadFile = File(...)):
-    # 이미지 파일 읽기
+    import requests
+
     image_content = await file.read()
-    
-    # 텍스트 추출 및 분석
+
     try:
         texts = text_extract(image_content)
         product_name, price, volume, brand = text_analyze(texts)
-        
-        return {
-            "product_name": product_name or "없음",
-            "price": price or "없음",
-            "volume": volume or "없음",
-            "brand": brand or "없음",
-            "detected_text": texts[0].description if texts else "텍스트가 감지되지 않았습니다."
+
+        def parse_price(price_str):
+            if not price_str:
+                return 0
+            try:
+                return int(price_str.replace(",", "").replace("원", "").strip())
+            except:
+                return 0
+
+        price_num = parse_price(price)
+
+        if not product_name:
+            return JSONResponse(status_code=400, content={"message": "상품명을 찾을 수 없습니다."})
+
+        payload = {
+            "title": product_name or "",
+            "price": price_num,
+            "volume": volume or "",
+            "brand": brand or ""
         }
+
+        print("Spring으로 보낼 JSON:", payload)
+
+        backend_url = os.environ.get("BACKEND_URL", "http://localhost:8080")
+        headers = {"Content-Type": "application/json"}
+        backend_response = requests.post(
+            backend_url + "/api/shopping/search",
+            headers=headers,
+            json=payload
+        )
+        backend_response.raise_for_status()
+
+        return backend_response.json()
+
     except Exception as e:
         return JSONResponse(
             status_code=500,
             content={"message": f"오류 발생: {str(e)}"}
         )
-
+    
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
