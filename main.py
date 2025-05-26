@@ -141,7 +141,7 @@ def text_analyze(texts):
     volume = None
     brand = None
 
-    brand_keywords = ['청정원', '오뚜기', 'CJ', '풀무원', '해표', '샘표', '롯데', '대상', '해태', '크라운']
+    brand_keywords = ['청정원', '오뚜기', 'CJ', '풀무원', '해표', '샘표', '롯데', '대상', '해태', '크라운', '오리온', '동원']
     volume_pattern = re.compile(r'(\d+\.?\d*)\s?(ml|g|kg|L|ℓ|G)', re.IGNORECASE)
     
     # 가격 패턴
@@ -220,16 +220,34 @@ def text_analyze(texts):
         price = price + "원"
         print(f"[선택] 최종 가격: {price}")
     
+    # # 상품명 결정
+    # if candidates:
+    #     filtered = [c for c in candidates if (brand and brand in c) or (volume and volume in c)]
+    #     product_line = max(filtered, key=len) if filtered else max(candidates, key=len)
+    #     if brand:
+    #         product_line = product_line.replace(brand, "")
+    #     if volume:
+    #         product_line = product_line.replace(volume, "")
+    #     product_name = product_line.strip("- )(")
+    #     print(f"[선택] 최종 상품명: {product_name}")
     # 상품명 결정
     if candidates:
         filtered = [c for c in candidates if (brand and brand in c) or (volume and volume in c)]
         product_line = max(filtered, key=len) if filtered else max(candidates, key=len)
+        
         if brand:
             product_line = product_line.replace(brand, "")
         if volume:
             product_line = product_line.replace(volume, "")
-        product_name = product_line.strip("- )(")
-        print(f"[선택] 최종 상품명: {product_name}")
+        
+        # 불필요한 괄호/기호 제거
+        product_name = product_line.strip("- )(").strip()
+        
+        # brand가 괄호로 감싸진 형태로 product_name에 포함되었을 때 추가 정리
+        if product_name.startswith(")") or product_name.endswith(")"):
+            product_name = product_name.strip(")")
+        if product_name.startswith("("):
+            product_name = product_name.strip("(")
     
     print(f"\n[결과] 상품명: {product_name}, 가격: {price}, 용량: {volume}, 브랜드: {brand}\n")
     return product_name, price, volume, brand
