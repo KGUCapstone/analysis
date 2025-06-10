@@ -142,7 +142,7 @@ def text_analyze(texts):
     brand = None
 
     brand_keywords = ['청정원', '오뚜기', 'CJ', '풀무원', '해표', '샘표', '롯데', '대상', '해태', '크라운', '오리온', '동원', '누아트']
-    volume_pattern = re.compile(r'(\d+\.?\d*)\s?(ml|g|kg|L|ℓ|G)', re.IGNORECASE)
+    volume_pattern = re.compile(r'(\d+\.?\d*)\s?(ml|g|kg|L|ℓ|G|m)', re.IGNORECASE)
     
     # 가격 패턴
     main_price_patterns = [
