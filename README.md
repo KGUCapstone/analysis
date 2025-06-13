@@ -1,4 +1,4 @@
-## Gavion - Analysis
+## Gavion - Backend
 
 
 <br><br>
@@ -37,6 +37,14 @@
 
 ![image](https://github.com/user-attachments/assets/d5462d8c-17db-4009-9853-7a2189e2fdee)
 
+
+## ERD
+
+![image](https://github.com/user-attachments/assets/c4df9e73-cca1-470e-a7aa-ffa0bf94ec21)
+
+<br>
+<br>
+<br>
 
 
 <br> <br> <br>
