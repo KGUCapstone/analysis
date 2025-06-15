@@ -71,7 +71,7 @@
 | Award | Certificate |
 |:---:|:---:|
 |  <img width="300" src=""> |<img width="300" src="https://github.com/user-attachments/assets/b65960f1-4b58-445d-920d-7ffe33ae36f5"> |
-| Gold Prize (금상) | Outstanding Paper Award (논문 우수상) |
+| Gold Prize (금상) | Excellent Paper Award (논문 우수상) |
 
 
 
